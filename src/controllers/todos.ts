@@ -21,7 +21,27 @@ export const updateTodos: RequestHandler<{ id: string }> = (req, res, next) => {
 
 	const todoIndex = TODOS.findIndex((todo) => todo.id === todoId);
 
-    if(todoIndex < 0){
-        throw new Error(' Cant find todo')
-    }
+	if (todoIndex < 0) {
+		throw new Error(' Cant find todo');
+	}
+
+	TODOS[todoIndex] = new Todo(TODOS[todoIndex].id, updatedText);
+
+	res.json({ message: 'Updated Done !', updatedTodo: TODOS[todoIndex] });
+};
+
+export const deleteTodo: RequestHandler = (req, res, next) => {
+	const todoId = req.params.id;
+	const todoIndex = TODOS.findIndex((todo) => todo.id === todoId);
+
+	if (todoIndex < 0) {
+		throw new Error(' Cant find todo');
+	}
+
+	TODOS.splice(todoIndex, 1);
+
+	res.json({
+		message: 'Todo deleted successfully!',
+		Todos: TODOS,
+	});
 };

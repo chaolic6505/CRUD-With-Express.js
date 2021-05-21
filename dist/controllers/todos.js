@@ -18,4 +18,18 @@ exports.updateTodos = (req, res, next) => {
     if (todoIndex < 0) {
         throw new Error(' Cant find todo');
     }
+    TODOS[todoIndex] = new todo_1.Todo(TODOS[todoIndex].id, updatedText);
+    res.json({ message: 'Updated Done !', updatedTodo: TODOS[todoIndex] });
+};
+exports.deleteTodo = (req, res, next) => {
+    const todoId = req.params.id;
+    const todoIndex = TODOS.findIndex((todo) => todo.id === todoId);
+    if (todoIndex < 0) {
+        throw new Error(' Cant find todo');
+    }
+    TODOS.splice(todoIndex, 1);
+    res.json({
+        message: 'Todo deleted successfully!',
+        Todos: TODOS,
+    });
 };
